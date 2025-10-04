@@ -175,4 +175,28 @@ class FindMyMainPage: BasePage {
     func getListItemCount() -> Int {
         return listTable.cells.count
     }
+    
+    // MARK: - Navigation to Detail Pages
+    
+    /// Tap on a person in the list by index
+    @discardableResult
+    func tapPersonAtIndex(_ index: Int) -> PeopleDetailPage {
+        let cell = listTable.cells.element(boundBy: index)
+        tap(cell)
+        return PeopleDetailPage(app: app)
+    }
+    
+    /// Tap on a person in the list by name
+    @discardableResult
+    func tapPersonByName(_ name: String) -> PeopleDetailPage {
+        let cell = listTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", name)).firstMatch
+        tap(cell)
+        return PeopleDetailPage(app: app)
+    }
+    
+    /// Tap on the first person in the list
+    @discardableResult
+    func tapFirstPerson() -> PeopleDetailPage {
+        return tapPersonAtIndex(0)
+    }
 }

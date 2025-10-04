@@ -48,6 +48,11 @@ class BasePage {
         return app.staticTexts[label]
     }
     
+    /// Find an image by identifier
+    func image(withIdentifier identifier: String) -> XCUIElement {
+        return app.images[identifier]
+    }
+    
     /// Find a text field by identifier
     func textField(withIdentifier identifier: String) -> XCUIElement {
         return app.textFields[identifier]

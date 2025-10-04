@@ -181,4 +181,36 @@ final class FindMeAppCTLTestUITests: XCTestCase {
             XCUIApplication().launch()
         }
     }
+    
+    @MainActor
+    func testNavigateToPeopleDetail() throws {
+        // Launch FindMy app
+        TestContext.shared.launchFindMyApp()
+        let app = TestContext.shared.getFindMyApp()
+        
+        // Create main page object
+        let mainPage = FindMyMainPage(app: app)
+        
+        // Navigate to People tab
+        mainPage.verifyMainPageIsDisplayed()
+        mainPage.navigateToPeopleTab()
+        mainPage.wait(2.0)
+        
+        // Tap on first person in the list
+        print("📱 Tapping on first person...")
+        let detailPage = mainPage.tapFirstPerson()
+        
+        // Verify detail page is displayed
+        detailPage.verifyDetailPageIsDisplayed()
+        detailPage.verifyMapIsDisplayed()
+        detailPage.wait(5.0)
+        detailPage.saveScreenshot(name: "people_detail_page")
+        
+        // Navigate back
+        print("⬅️ Navigating back to main page...")
+        let returnedMainPage = detailPage.tapBackButton()
+        returnedMainPage.verifyMainPageIsDisplayed()
+        
+        print("✅ People detail navigation test passed")
+    }
 }
