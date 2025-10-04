@@ -85,3 +85,31 @@ class FindMyMainPage(BasePage):
         cells = self.driver.find_elements(AppiumBy.XPATH, "//XCUIElementTypeTable/XCUIElementTypeCell")
         names = [cell.get_attribute("label") for cell in cells]
         return names
+    
+    def tap_device_by_name(self, device_name):
+        """Tap on a device by its name"""
+        from .device_detail_page import DeviceDetailPage
+        # Find all cells and search for the one containing the device name
+        cells = self.driver.find_elements(AppiumBy.XPATH, "//XCUIElementTypeTable/XCUIElementTypeCell")
+        for cell in cells:
+            label = cell.get_attribute("label")
+            if device_name.lower() in label.lower():
+                self.tap(cell)
+                print(f"✅ Tapped device: {device_name}")
+                return DeviceDetailPage(self.driver)
+        
+        raise Exception(f"❌ Device '{device_name}' not found in the list")
+    
+    def tap_person_by_name(self, person_name):
+        """Tap on a person by their name"""
+        from .people_detail_page import PeopleDetailPage
+        # Find all cells and search for the one containing the person name
+        cells = self.driver.find_elements(AppiumBy.XPATH, "//XCUIElementTypeTable/XCUIElementTypeCell")
+        for cell in cells:
+            label = cell.get_attribute("label")
+            if person_name.lower() in label.lower():
+                self.tap(cell)
+                print(f"✅ Tapped person: {person_name}")
+                return PeopleDetailPage(self.driver)
+        
+        raise Exception(f"❌ Person '{person_name}' not found in the list")

@@ -68,6 +68,17 @@ cd python_prot
 pytest tests/test_findmy_navigation.py::test_navigate_to_people_tab -v -s
 ```
 
+### Run Device Tests
+
+```bash
+cd python_prot
+# Run all device tests
+pytest tests/test_device.py -v -s
+
+# Run specific device test
+pytest tests/test_device.py::TestDevice::test_play_sound_on_chis_laptop -v -s
+```
+
 ## Configuration
 
 Update device settings in test files if needed:
@@ -89,12 +100,17 @@ The tests use the Page Object Model pattern:
 
 ## Test Cases
 
+### Navigation Tests (`test_findmy_navigation.py`)
 - `test_navigate_to_people_tab`: Navigate to People tab
 - `test_navigate_to_devices_tab`: Navigate to Devices tab
 - `test_navigate_to_items_tab`: Navigate to Items tab
 - `test_navigate_to_me_tab`: Navigate to Me tab
 - `test_view_person_details`: View person details
 - `test_view_device_details`: View device details
+
+### Device Tests (`test_device.py`)
+- `TestDevice.test_play_sound_on_chis_laptop`: Play sound on Chi's Laptop device
+- `TestDevice.test_view_chis_laptop_details`: View Chi's Laptop device details
 
 ## Troubleshooting
 

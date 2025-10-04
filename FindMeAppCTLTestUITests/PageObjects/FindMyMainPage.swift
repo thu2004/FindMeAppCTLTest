@@ -93,6 +93,8 @@ class FindMyMainPage: BasePage {
     @discardableResult
     func navigateToDevicesTab() -> FindMyMainPage {
         tap(devicesTabButton)
+        verifyDevicesTabIsSelected()
+        wait(2.0)
         return self
     }
     
@@ -188,14 +190,6 @@ class FindMyMainPage: BasePage {
         return PeopleDetailPage(app: app)
     }
     
-    /// Tap on a person in the list by name
-    @discardableResult
-    func tapPersonByName(_ name: String) -> PeopleDetailPage {
-        let cell = listTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", name)).firstMatch
-        tap(cell)
-        return PeopleDetailPage(app: app)
-    }
-    
     /// Tap on the first person in the list
     @discardableResult
     func tapFirstPerson() -> PeopleDetailPage {
@@ -208,14 +202,6 @@ class FindMyMainPage: BasePage {
     @discardableResult
     func tapDeviceAtIndex(_ index: Int) -> DeviceDetailPage {
         let cell = listTable.cells.element(boundBy: index)
-        tap(cell)
-        return DeviceDetailPage(app: app)
-    }
-    
-    /// Tap on a device in the list by name
-    @discardableResult
-    func tapDeviceByName(_ name: String) -> DeviceDetailPage {
-        let cell = listTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", name)).firstMatch
         tap(cell)
         return DeviceDetailPage(app: app)
     }
@@ -236,17 +222,98 @@ class FindMyMainPage: BasePage {
         return ItemDetailPage(app: app)
     }
     
-    /// Tap on an item in the list by name
-    @discardableResult
-    func tapItemByName(_ name: String) -> ItemDetailPage {
-        let cell = listTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", name)).firstMatch
-        tap(cell)
-        return ItemDetailPage(app: app)
-    }
-    
     /// Tap on the first item in the list
     @discardableResult
     func tapFirstItem() -> ItemDetailPage {
         return tapItemAtIndex(0)
+    }
+    
+    // MARK: - Search by Name Methods
+    
+    /// Find and tap a device by name (case-insensitive partial match)
+    @discardableResult
+    func tapDeviceByName(_ deviceName: String) -> DeviceDetailPage {
+        let cells = listTable.cells
+        for i in 0..<cells.count {
+            let cell = cells.element(boundBy: i)
+            
+            // Check cell label first
+            if cell.label.localizedCaseInsensitiveContains(deviceName) {
+                tap(cell)
+                wait(3.0)
+                let detailPage = DeviceDetailPage(app: app)
+                detailPage.verifyDetailPageIsDisplayed()
+                return detailPage
+            }
+            
+            // Check StaticText elements within the cell
+            let staticTexts = cell.staticTexts
+            for j in 0..<staticTexts.count {
+                let text = staticTexts.element(boundBy: j)
+                if text.label.localizedCaseInsensitiveContains(deviceName) {
+                    tap(cell)
+                    wait(3.0)
+                    let detailPage = DeviceDetailPage(app: app)
+                    detailPage.verifyDetailPageIsDisplayed()
+                    return detailPage
+                }
+            }
+        }
+        XCTFail("Device '\(deviceName)' not found in the list")
+        return DeviceDetailPage(app: app)
+    }
+    
+    /// Find and tap a person by name (case-insensitive partial match)
+    @discardableResult
+    func tapPersonByName(_ personName: String) -> PeopleDetailPage {
+        let cells = listTable.cells
+        for i in 0..<cells.count {
+            let cell = cells.element(boundBy: i)
+            
+            // Check cell label first
+            if cell.label.localizedCaseInsensitiveContains(personName) {
+                tap(cell)
+                return PeopleDetailPage(app: app)
+            }
+            
+            // Check StaticText elements within the cell
+            let staticTexts = cell.staticTexts
+            for j in 0..<staticTexts.count {
+                let text = staticTexts.element(boundBy: j)
+                if text.label.localizedCaseInsensitiveContains(personName) {
+                    tap(cell)
+                    return PeopleDetailPage(app: app)
+                }
+            }
+        }
+        XCTFail("Person '\(personName)' not found in the list")
+        return PeopleDetailPage(app: app)
+    }
+    
+    /// Find and tap an item by name (case-insensitive partial match)
+    @discardableResult
+    func tapItemByName(_ itemName: String) -> ItemDetailPage {
+        let cells = listTable.cells
+        for i in 0..<cells.count {
+            let cell = cells.element(boundBy: i)
+            
+            // Check cell label first
+            if cell.label.localizedCaseInsensitiveContains(itemName) {
+                tap(cell)
+                return ItemDetailPage(app: app)
+            }
+            
+            // Check StaticText elements within the cell
+            let staticTexts = cell.staticTexts
+            for j in 0..<staticTexts.count {
+                let text = staticTexts.element(boundBy: j)
+                if text.label.localizedCaseInsensitiveContains(itemName) {
+                    tap(cell)
+                    return ItemDetailPage(app: app)
+                }
+            }
+        }
+        XCTFail("Item '\(itemName)' not found in the list")
+        return ItemDetailPage(app: app)
     }
 }

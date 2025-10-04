@@ -16,6 +16,12 @@ This folder contains all documentation for the FindMeAppCTLTest project.
   - Best practices
   - Future test areas
 
+- **[DEVICE_TESTS.md](DEVICE_TESTS.md)** - Device functionality tests
+  - Swift and Python implementations
+  - Play Sound, Directions, Location tests
+  - Chi's Laptop specific tests
+  - Running device tests
+
 - **[PAGE_OBJECTS_README.md](PAGE_OBJECTS_README.md)** - Page Object pattern guide
   - Design pattern overview
   - BasePage functionality
