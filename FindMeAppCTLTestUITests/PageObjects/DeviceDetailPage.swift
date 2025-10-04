@@ -95,7 +95,7 @@ class DeviceDetailPage: BasePage {
     
     /// Notify When Found button
     var notifyButton: XCUIElement {
-        return button(withLabel: Identifiers.notify)
+        return app.buttons.matching(NSPredicate(format: "label CONTAINS[c] 'notify'")).firstMatch
     }
     
     /// Location label
@@ -151,7 +151,7 @@ class DeviceDetailPage: BasePage {
     /// Mark device as lost
     @discardableResult
     func markAsLost() -> DeviceDetailPage {
-        tap(markAsLostButton)
+        tap(lostModeButton)
         return self
     }
     
@@ -224,7 +224,7 @@ class DeviceDetailPage: BasePage {
     /// Verify Mark As Lost button is visible
     @discardableResult
     func verifyMarkAsLostButtonIsVisible() -> DeviceDetailPage {
-        verifyElementExists(markAsLostButton, timeout: defaultTimeout)
+        verifyElementExists(lostModeButton, timeout: defaultTimeout)
         return self
     }
     
@@ -271,6 +271,6 @@ class DeviceDetailPage: BasePage {
     
     /// Check if Mark As Lost button is enabled
     func isMarkAsLostEnabled() -> Bool {
-        return markAsLostButton.isEnabled
+        return lostModeButton.isEnabled
     }
 }

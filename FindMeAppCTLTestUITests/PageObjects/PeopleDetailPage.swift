@@ -55,7 +55,7 @@ class PeopleDetailPage: BasePage {
     
     /// Back button to return to main screen
     var backButton: XCUIElement {
-        return button(withLabel: Identifiers.backButton)
+        return button(withLabel: Identifiers.closeButton)
     }
     
     /// Done button
