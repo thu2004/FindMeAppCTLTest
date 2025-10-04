@@ -178,6 +178,8 @@ class FindMyMainPage: BasePage {
     
     // MARK: - Navigation to Detail Pages
     
+    // MARK: People Detail Navigation
+    
     /// Tap on a person in the list by index
     @discardableResult
     func tapPersonAtIndex(_ index: Int) -> PeopleDetailPage {
@@ -198,5 +200,53 @@ class FindMyMainPage: BasePage {
     @discardableResult
     func tapFirstPerson() -> PeopleDetailPage {
         return tapPersonAtIndex(0)
+    }
+    
+    // MARK: Device Detail Navigation
+    
+    /// Tap on a device in the list by index
+    @discardableResult
+    func tapDeviceAtIndex(_ index: Int) -> DeviceDetailPage {
+        let cell = listTable.cells.element(boundBy: index)
+        tap(cell)
+        return DeviceDetailPage(app: app)
+    }
+    
+    /// Tap on a device in the list by name
+    @discardableResult
+    func tapDeviceByName(_ name: String) -> DeviceDetailPage {
+        let cell = listTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", name)).firstMatch
+        tap(cell)
+        return DeviceDetailPage(app: app)
+    }
+    
+    /// Tap on the first device in the list
+    @discardableResult
+    func tapFirstDevice() -> DeviceDetailPage {
+        return tapDeviceAtIndex(0)
+    }
+    
+    // MARK: Item Detail Navigation
+    
+    /// Tap on an item in the list by index
+    @discardableResult
+    func tapItemAtIndex(_ index: Int) -> ItemDetailPage {
+        let cell = listTable.cells.element(boundBy: index)
+        tap(cell)
+        return ItemDetailPage(app: app)
+    }
+    
+    /// Tap on an item in the list by name
+    @discardableResult
+    func tapItemByName(_ name: String) -> ItemDetailPage {
+        let cell = listTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", name)).firstMatch
+        tap(cell)
+        return ItemDetailPage(app: app)
+    }
+    
+    /// Tap on the first item in the list
+    @discardableResult
+    func tapFirstItem() -> ItemDetailPage {
+        return tapItemAtIndex(0)
     }
 }

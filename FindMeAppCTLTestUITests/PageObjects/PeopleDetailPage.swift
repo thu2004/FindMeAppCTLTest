@@ -15,27 +15,33 @@ class PeopleDetailPage: BasePage {
     
     private struct Identifiers {
         // Navigation
-        static let backButton = "Close"  // Actually labeled "Close" not "Back"
+        static let closeButton = "Close"
         static let doneButton = "Done"
         
         // Person info
-        static let personName = "PersonName"
+        static let personNameID = "PrimaryLabel"  // StaticText identifier
         static let personAvatar = "PersonAvatar"
         
-        // Action buttons (from actual UI inspection)
-        static let contact = "Contact,Info"  // Contact button
-        static let directions = "Directions, "  // Directions button (note trailing space)
+        // Action buttons (from actual UI inspection 2025-10-04)
+        static let contactButtonID = "FMPlatterButton"  // ID for Contact button
+        static let contactLabel = "Contact,Info"  // Label for Contact button
+        static let directionsButtonID = "FMPlatterButton"  // ID for Directions button
+        static let directionsLabel = "Directions, "  // Label (note trailing space)
+        static let actionButtonID = "DetailsSectionRowActionButton"  // ID for action buttons
         static let addToFavourites = "Add to Favourites"
         static let labelLocation = "Label Current Location"
         static let stopSharing = "Stop Sharing My Location"
         static let remove = "Remove"
         static let addButton = "Add"  // Generic add button
         
+        // Location info buttons
+        static let secondaryLabel = "SecondaryLabel"  // Address button
+        static let tertiaryLabel = "TertiaryLabel"  // Live status button
+        
         // Location info
         static let locationLabel = "LocationLabel"
         static let lastSeenLabel = "LastSeenLabel"
         static let addressLabel = "AddressLabel"
-        
         // Map
         static let mapView = "MapView"
         
@@ -59,7 +65,7 @@ class PeopleDetailPage: BasePage {
     
     /// Person's name label
     var personNameLabel: XCUIElement {
-        return staticText(withLabel: Identifiers.personName)
+        return app.staticTexts[Identifiers.personNameID]
     }
     
     /// Person's avatar image
@@ -69,32 +75,32 @@ class PeopleDetailPage: BasePage {
     
     /// Contact button
     var contactButton: XCUIElement {
-        return button(withLabel: Identifiers.contact)
+        return app.buttons[Identifiers.contactLabel]
     }
     
     /// Directions button
     var directionsButton: XCUIElement {
-        return button(withLabel: Identifiers.directions)
+        return app.buttons[Identifiers.directionsLabel]
     }
     
     /// Add to Favourites button
     var addToFavouritesButton: XCUIElement {
-        return button(withLabel: Identifiers.addToFavourites)
+        return app.buttons[Identifiers.addToFavourites]
     }
     
     /// Label Current Location button
     var labelLocationButton: XCUIElement {
-        return button(withLabel: Identifiers.labelLocation)
+        return app.buttons[Identifiers.labelLocation]
     }
     
     /// Stop Sharing My Location button
     var stopSharingButton: XCUIElement {
-        return button(withLabel: Identifiers.stopSharing)
+        return app.buttons[Identifiers.stopSharing]
     }
     
     /// Remove button
     var removeButton: XCUIElement {
-        return button(withLabel: Identifiers.remove)
+        return app.buttons[Identifiers.remove]
     }
     
     /// Location label

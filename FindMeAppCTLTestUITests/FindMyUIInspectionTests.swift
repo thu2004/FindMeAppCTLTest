@@ -32,6 +32,9 @@ final class FindMyUIInspectionTests: XCTestCase {
         print("FINDMY APP UI INSPECTION - \(timestamp)")
         print(String(repeating: "=", count: 80) + "\n")
         
+        // Inspect main page first
+        inspectMainPage(app: app)
+        
         // Print full app hierarchy
         print("📱 FULL APP HIERARCHY:")
         print(String(repeating: "-", count: 80))
@@ -166,5 +169,229 @@ final class FindMyUIInspectionTests: XCTestCase {
         // Keep app open for 10 seconds to allow manual inspection
         print("⏱️ Keeping app open for 10 seconds for manual inspection...")
         Thread.sleep(forTimeInterval: 10.0)
+    }
+    
+    // MARK: - Comprehensive Tab and Detail Inspection
+    
+    @MainActor
+    func testInspectAllTabsAndDetails() throws {
+        // Launch FindMy app
+        TestContext.shared.launchFindMyApp()
+        let app = TestContext.shared.getFindMyApp()
+        
+        print("\n" + String(repeating: "=", count: 80))
+        print("COMPREHENSIVE TAB & DETAIL PAGE INSPECTION")
+        print(String(repeating: "=", count: 80) + "\n")
+        
+        // Inspect People Tab and Detail
+        print("\n" + String(repeating: "█", count: 80))
+        print("PEOPLE TAB INSPECTION")
+        print(String(repeating: "█", count: 80))
+        inspectPeopleTab(app: app)
+        
+        // Inspect Devices Tab and Detail
+        print("\n" + String(repeating: "█", count: 80))
+        print("DEVICES TAB INSPECTION")
+        print(String(repeating: "█", count: 80))
+        inspectDevicesTab(app: app)
+        
+        // Inspect Items Tab and Detail
+        print("\n" + String(repeating: "█", count: 80))
+        print("ITEMS TAB INSPECTION")
+        print(String(repeating: "█", count: 80))
+        inspectItemsTab(app: app)
+        
+        // Inspect Me Tab
+        print("\n" + String(repeating: "█", count: 80))
+        print("ME TAB INSPECTION")
+        print(String(repeating: "█", count: 80))
+        inspectMeTab(app: app)
+        
+        print("\n" + String(repeating: "=", count: 80))
+        print("END OF COMPREHENSIVE INSPECTION")
+        print(String(repeating: "=", count: 80) + "\n")
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func inspectMainPage(app: XCUIApplication) {
+        print("📱 MAIN PAGE:")
+        print(String(repeating: "-", count: 80))
+        printAllButtons(app: app, context: "Main Page")
+        Thread.sleep(forTimeInterval: 2.0)
+    }
+    
+    private func inspectPeopleTab(app: XCUIApplication) {
+        // Navigate to People tab
+        let peopleButton = app.buttons["People"]
+        if peopleButton.exists {
+            peopleButton.tap()
+            Thread.sleep(forTimeInterval: 2.0)
+            
+            print("\n👥 PEOPLE TAB - Main View:")
+            printAllButtons(app: app, context: "People Tab")
+            printAllCells(app: app, context: "People List")
+            
+            // Take screenshot
+            saveScreenshot(app: app, name: "People_Tab")
+            
+            // Tap first person if exists
+            let cells = app.tables.cells
+            if cells.count > 0 {
+                print("\n👤 Tapping first person...")
+                cells.element(boundBy: 0).tap()
+                Thread.sleep(forTimeInterval: 3.0)
+                
+                print("\n📋 PEOPLE DETAIL PAGE:")
+                printAllButtons(app: app, context: "People Detail")
+                printAllStaticTexts(app: app, context: "People Detail", limit: 20)
+                
+                // Take screenshot
+                saveScreenshot(app: app, name: "People_Detail")
+                
+                // Go back
+                let closeButton = app.buttons["Close"]
+                if closeButton.exists {
+                    closeButton.tap()
+                    Thread.sleep(forTimeInterval: 1.0)
+                }
+            }
+        }
+    }
+    
+    private func inspectDevicesTab(app: XCUIApplication) {
+        // Navigate to Devices tab
+        let devicesButton = app.buttons["Devices"]
+        if devicesButton.exists {
+            devicesButton.tap()
+            Thread.sleep(forTimeInterval: 2.0)
+            
+            print("\n📱 DEVICES TAB - Main View:")
+            printAllButtons(app: app, context: "Devices Tab")
+            printAllCells(app: app, context: "Devices List")
+            
+            // Take screenshot
+            saveScreenshot(app: app, name: "Devices_Tab")
+            
+            // Tap first device if exists
+            let cells = app.tables.cells
+            if cells.count > 0 {
+                print("\n📲 Tapping first device...")
+                cells.element(boundBy: 0).tap()
+                Thread.sleep(forTimeInterval: 3.0)
+                
+                print("\n📋 DEVICE DETAIL PAGE:")
+                printAllButtons(app: app, context: "Device Detail")
+                printAllStaticTexts(app: app, context: "Device Detail", limit: 20)
+                
+                // Take screenshot
+                saveScreenshot(app: app, name: "Device_Detail")
+                
+                // Go back
+                let closeButton = app.buttons["Close"]
+                if closeButton.exists {
+                    closeButton.tap()
+                    Thread.sleep(forTimeInterval: 1.0)
+                }
+            }
+        }
+    }
+    
+    private func inspectItemsTab(app: XCUIApplication) {
+        // Navigate to Items tab
+        let itemsButton = app.buttons["Items"]
+        if itemsButton.exists {
+            itemsButton.tap()
+            Thread.sleep(forTimeInterval: 2.0)
+            
+            print("\n🔍 ITEMS TAB - Main View:")
+            printAllButtons(app: app, context: "Items Tab")
+            printAllCells(app: app, context: "Items List")
+            
+            // Take screenshot
+            saveScreenshot(app: app, name: "Items_Tab")
+            
+            // Tap first item if exists
+            let cells = app.tables.cells
+            if cells.count > 0 {
+                print("\n🏷️ Tapping first item...")
+                cells.element(boundBy: 0).tap()
+                Thread.sleep(forTimeInterval: 3.0)
+                
+                print("\n📋 ITEM DETAIL PAGE:")
+                printAllButtons(app: app, context: "Item Detail")
+                printAllStaticTexts(app: app, context: "Item Detail", limit: 20)
+                
+                // Take screenshot
+                saveScreenshot(app: app, name: "Item_Detail")
+                
+                // Go back
+                let closeButton = app.buttons["Close"]
+                if closeButton.exists {
+                    closeButton.tap()
+                    Thread.sleep(forTimeInterval: 1.0)
+                }
+            }
+        }
+    }
+    
+    private func inspectMeTab(app: XCUIApplication) {
+        // Navigate to Me tab
+        let meButton = app.buttons["Me"]
+        if meButton.exists {
+            meButton.tap()
+            Thread.sleep(forTimeInterval: 2.0)
+            
+            print("\n👤 ME TAB - Main View:")
+            printAllButtons(app: app, context: "Me Tab")
+            printAllStaticTexts(app: app, context: "Me Tab", limit: 30)
+            
+            // Take screenshot
+            saveScreenshot(app: app, name: "Me_Tab")
+        }
+    }
+    
+    private func printAllButtons(app: XCUIApplication, context: String) {
+        print("\n🔘 BUTTONS in \(context):")
+        print(String(repeating: "-", count: 60))
+        let buttons = app.buttons
+        print("Total: \(buttons.count)")
+        for (index, button) in buttons.allElementsBoundByIndex.enumerated() {
+            if button.exists {
+                print("  [\(index)] '\(button.label)' | ID: '\(button.identifier)' | Selected: \(button.isSelected) | Enabled: \(button.isEnabled)")
+            }
+        }
+    }
+    
+    private func printAllCells(app: XCUIApplication, context: String) {
+        print("\n📋 CELLS in \(context):")
+        print(String(repeating: "-", count: 60))
+        let cells = app.tables.cells
+        print("Total: \(cells.count)")
+        for (index, cell) in cells.allElementsBoundByIndex.prefix(10).enumerated() {
+            if cell.exists {
+                print("  [\(index)] '\(cell.label)' | ID: '\(cell.identifier)'")
+            }
+        }
+    }
+    
+    private func printAllStaticTexts(app: XCUIApplication, context: String, limit: Int = 15) {
+        print("\n📝 STATIC TEXTS in \(context):")
+        print(String(repeating: "-", count: 60))
+        let texts = app.staticTexts
+        print("Total: \(texts.count) (showing first \(limit))")
+        for (index, text) in texts.allElementsBoundByIndex.prefix(limit).enumerated() {
+            if text.exists {
+                print("  [\(index)] '\(text.label)' | ID: '\(text.identifier)'")
+            }
+        }
+    }
+    
+    private func saveScreenshot(app: XCUIApplication, name: String) {
+        let screenshot = app.screenshot()
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 }
