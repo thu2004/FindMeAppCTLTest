@@ -1,0 +1,19 @@
+# .gitignore
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+
+# Build
+build/
+DerivedData/
+
+# Logs and temp files
+*.log
+tmp/
+inspections/
+
+# macOS
+.DS_Store
